@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using ToDoListApp.Data;
 
 namespace ToDoListApp
 {
@@ -13,6 +16,14 @@ namespace ToDoListApp
 
             builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
             .AddNegotiate();
+
+
+            //bankai 
+            // builder services!!!!!
+            builder.Services.AddSingleton<DapperContext>();
+            //!!!!!
+            builder.Services.AddScoped<IToDoListRepository, ToDoListRepository>();
+            builder.Services.AddControllers();
 
             builder.Services.AddAuthorization(options =>
             {
