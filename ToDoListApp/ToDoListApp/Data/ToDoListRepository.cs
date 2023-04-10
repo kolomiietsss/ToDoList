@@ -20,7 +20,8 @@ namespace ToDoListApp.Data
 
         public async Task<IEnumerable<TaskWithCategory>> GetToDoList()
         {
-            var query = "SELECT t.id as Id, title as Title, description as Description, create_date as CreatedDate, due_date as DueDate, status as Status, categories.name as Category FROM tasks t INNER JOIN categories ON t.category_id = categories.id";
+            var query = "SELECT t.id as Id, title as Title, description as Description, create_date as CreatedDate, " +
+                "due_date as DueDate, status as Status, categories.name as Category FROM tasks t INNER JOIN categories ON t.category_id = categories.id";
             using (var connection = _context.CreateConnection())
             {
                 var tasks = await connection.QueryAsync<TaskWithCategory>(query);
