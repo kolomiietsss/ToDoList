@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ToDoListApp.Data;
+using ToDoListApp.Models;
 
 namespace ToDoListApp.Controllers
 {
@@ -18,8 +19,24 @@ namespace ToDoListApp.Controllers
         {
             try
             {
-                var toDoList = await _toDoRepo.GetToDoList();
-                return View(toDoList);
+                var tasks = await _toDoRepo.GetTasks();
+                var categories = await _toDoRepo.GetCategories();
+
+                var viewModel = new TaskListPageViewModel
+                {
+                    Tasks = tasks.Select(t => new TaskViewModel
+                    {
+                        Id = t.Id,
+                        CreatedDate = t.CreatedDate,
+                        DueDate = t.DueDate,
+                        Status = t.Status,
+                        Title = t.Title,
+                        CategoryName = categories.FirstOrDefault(c => c.Id == t.CategoryId)?.Name
+                    })
+                   
+                };
+
+                return View(viewModel);
             }
             catch (Exception ex)
             {

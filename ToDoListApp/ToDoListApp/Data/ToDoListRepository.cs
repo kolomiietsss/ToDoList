@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using ToDoListApp.Data.Models;
 using ToDoListApp.Models;
 
 namespace ToDoListApp.Data
@@ -18,15 +17,26 @@ namespace ToDoListApp.Data
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<TaskWithCategory>> GetToDoList()
+        public async Task<IEnumerable<TaskToDo>> GetTasks()
         {
-            var query = "SELECT t.id as Id, title as Title, description as Description, create_date as CreatedDate, " +
-                "due_date as DueDate, status as Status, categories.name as Category FROM tasks t INNER JOIN categories ON t.category_id = categories.id";
+            var query = "SELECT id as Id, title as Title, create_date as CreatedDate, " +
+                "due_date as DueDate, status as Status, category_id as CategoryId FROM tasks";
             using (var connection = _context.CreateConnection())
             {
-                var tasks = await connection.QueryAsync<TaskWithCategory>(query);
+                var tasks = await connection.QueryAsync<TaskToDo>(query);
                 return tasks.ToList();
             }
         }
+
+        public async Task<IEnumerable<Category>> GetCategories()
+        {
+            var query = "SELECT id as Id, name as Name FROM categories";
+            using (var connection = _context.CreateConnection())
+            {
+                var categories = await connection.QueryAsync<Category>(query);
+                return categories.ToList();
+            }
+        }
+
     }
 }

@@ -85,3 +85,14 @@ INNER JOIN categories c ON t.category_id = c.id;
 SELECT tasks.title, categories.name
 FROM tasks
 LEFT JOIN categories ON tasks.category_id = categories.id;
+
+SELECT t.id as Id, title as Title, description as Description, 
+create_date as CreatedDate, due_date as DueDate, status as Status, 
+categories.name as Category FROM tasks t INNER JOIN categories ON t.category_id = categories.id
+
+SELECT id as Id, title as Title, description as Description, create_date as CreatedDate, 
+                due_date as DueDate, status as Status FROM tasks
+
+SELECT id as Id, name as Name FROM categories
+
+ALTER TABLE tasks DROP COLUMN description;

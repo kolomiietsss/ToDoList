@@ -1,13 +1,12 @@
-﻿namespace ToDoListApp.Data.Models
+﻿namespace ToDoListApp.Models
 {
-    public class TaskWithCategory
+    public class TaskViewModel 
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string? Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DueDate { get; set; }
         public int Status { get; set; }
-        public string Category { get; set; }
+        public string CategoryName { get; set; }
     }
 }
