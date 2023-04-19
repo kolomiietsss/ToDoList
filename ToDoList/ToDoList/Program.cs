@@ -1,9 +1,16 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using ToDoList.DAL;
+using ToDoList.Services.Implementations;
+using ToDoList.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<DapperContext>(); 
+builder.Services.AddScoped<ITaskService, TaskService>(); 
+builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
     .AddNegotiate();
